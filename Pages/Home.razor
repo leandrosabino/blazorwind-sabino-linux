@@ -1,0 +1,322 @@
+﻿@page "/"
+
+
+@inject SupabaseService SupabaseService
+@inject NavigationManager Navigation
+@using System.IO
+@using Microsoft.AspNetCore.Components.Forms
+@inject IJSRuntime JS
+@inject IJSRuntime JSRuntime
+@using Supabase.Gotrue
+
+
+
+
+<PageTitle>Home</PageTitle>
+
+<body>
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5">
+                    </path>
+                </svg><span class="ml-3 text-xl">Plantas Detectaveis</span>
+            </a>
+            <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+                <a class="mr-5 hover:text-gray-900">About</a>
+                <a class="mr-5 hover:text-gray-900">Contact</a>
+                <a class="mr-5 hover:text-gray-900">Login</a>
+                <a class="mr-5 hover:text-gray-900">Fourth Link</a>
+            </nav>
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" @onclick="NavigateToPageCriarLogin">
+                Login<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4 ml-1">
+                    <path d="M5 12h14M12 5l7 7-7 7">
+                    </path>
+                </svg>
+            </button>
+            <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" @onclick="NavigateToPageCriarconta">
+                Criar Conta<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4 ml-1">
+                    <path d="M5 12h14M12 5l7 7-7 7">
+                    </path>
+                </svg>
+            </button>
+
+            @if (@displayName != "Usuário")
+            {
+                <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0" @onclick="NavigateToDashBoard">
+                    DashBoard <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4 ml-1">
+                        <path d="M5 12h14M12 5l7 7-7 7">
+                        </path>
+                    </svg>
+                </button>
+            }
+
+        </div>
+    </header>
+    <section class="text-gray-600 body-font">
+        <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+            <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                    Bem-vindo(a), @displayName!
+                </h1>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="text-gray-600 body-font">
+        <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+            <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                    Iremos detectar a sua Planta, usando a nossa Inteligencia Artificial
+                    <br class="hidden lg:inline-block" />..
+                </h1>
+                <p class="mb-8 leading-relaxed">
+                    Descubra plantas exôticas ao seu Redor.Seu mundo, suas plantas !!!
+                </p>
+
+
+
+            </div>
+            <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+                <img alt="hero" src="https://supabase.leandroti.uk/storage/v1/object/public/paciente-imagens/imgAI/Leonardo_Phoenix_A_futuristic_3D_render_of_a_plant_being_scann_0.jpg" class="object-cover object-center rounded" />
+            </div>
+        </div>
+    </section>
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-20">
+                <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">
+                    Pricing
+                </h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+                    Banh mi cornhole echo park skateboard authentic crucifix neutra tilde lyft biodiesel artisan direct trade mumblecore 3 wolf moon twee
+                </p>
+            </div>
+            <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                <table class="table-auto w-full text-left whitespace-no-wrap">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                                Plan
+                            </th>
+                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                Speed
+                            </th>
+                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                Storage
+                            </th>
+                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                Price
+                            </th>
+                            <th class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="px-4 py-3">
+                                Start
+                            </td>
+                            <td class="px-4 py-3">
+                                5 Mb/s
+                            </td>
+                            <td class="px-4 py-3">
+                                15 GB
+                            </td>
+                            <td class="px-4 py-3 text-lg text-gray-900">
+                                Free
+                            </td>
+                            <td class="w-10 text-center">
+                                <input name="plan" type="radio" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-t-2 border-gray-200 px-4 py-3">
+                                Pro
+                            </td>
+                            <td class="border-t-2 border-gray-200 px-4 py-3">
+                                25 Mb/s
+                            </td>
+                            <td class="border-t-2 border-gray-200 px-4 py-3">
+                                25 GB
+                            </td>
+                            <td class="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">
+                                $24
+                            </td>
+                            <td class="border-t-2 border-gray-200 w-10 text-center">
+                                <input name="plan" type="radio" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-t-2 border-gray-200 px-4 py-3">
+                                Business
+                            </td>
+                            <td class="border-t-2 border-gray-200 px-4 py-3">
+                                36 Mb/s
+                            </td>
+                            <td class="border-t-2 border-gray-200 px-4 py-3">
+                                40 GB
+                            </td>
+                            <td class="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">
+                                $50
+                            </td>
+                            <td class="border-t-2 border-gray-200 w-10 text-center">
+                                <input name="plan" type="radio" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                Exclusive
+                            </td>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                48 Mb/s
+                            </td>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3">
+                                120 GB
+                            </td>
+                            <td class="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900">
+                                $72
+                            </td>
+                            <td class="border-t-2 border-b-2 border-gray-200 w-10 text-center">
+                                <input name="plan" type="radio" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex pl-4 mt-4 lg:w-2/3 w-full mx-auto">
+                <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                    Learn More
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4 ml-2">
+                        <path d="M5 12h14M12 5l7 7-7 7">
+                        </path>
+                    </svg>
+                </a>
+                <button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
+            </div>
+            <section class="text-gray-600 body-font">
+                <div class="container px-5 py-24 mx-auto">
+                    <div class="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center">
+                        <svg fill="currentColor" viewBox="0 0 975.036 975.036" class="inline-block w-8 h-8 text-gray-400 mb-8">
+                            <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z">
+                            </path>
+                        </svg>
+                        <p class="leading-relaxed text-lg">
+                            Edison bulb retro cloud bread echo park, helvetica stumptown taiyaki taxidermy 90's cronut +1 kinfolk. Single-origin coffee ennui shaman taiyaki vape DIY tote bag drinking vinegar cronut adaptogen squid fanny pack vaporware. Man bun next level coloring book skateboard four loko knausgaard. Kitsch keffiyeh master cleanse direct trade indigo juice before they sold out gentrify plaid gastropub normcore XOXO 90's pickled cindigo jean shorts. Slow-carb next level shoindigoitch ethical authentic, yr scenester sriracha forage franzen organic drinking vinegar.
+                        </p>
+                        <span class="inline-block h-1 w-10 rounded bg-indigo-500 mt-8 mb-6"></span>
+                        <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">
+                            HOLDEN CAULFIELD
+                        </h2>
+                        <p class="text-gray-500">
+                            Senior Product Designer
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</body>
+
+
+@code {
+
+    private ElementReference videoElement;
+    private ElementReference canvasElement;
+    private ElementReference photoElement;
+
+
+    public Supabase.Client _supabase;
+
+
+    private string displayName = "Usuário";
+    private string email = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Extrai o access_token da URL
+        var uri = Navigation.Uri;
+        var queryParams = new Uri(uri).Fragment;
+
+        if (!string.IsNullOrEmpty(queryParams) && queryParams.Contains("access_token"))
+        {
+            var accessToken = ExtractAccessToken(queryParams);
+            var refreshToken = ExtractParameterFromQuery(queryParams, "refresh_token");
+
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                // Armazena o access token e cria uma sessão no Supabase
+                await SupabaseService.ArmazenarSessao(accessToken, refreshToken);
+
+
+                // Atualiza o displayName com o nome do usuário autenticado
+                var userInfo = await SupabaseService.ObterUsuarioAtual();
+                if (userInfo != null)
+                {
+                    displayName = userInfo.DisplayName;
+                    email = userInfo.Email;
+                }
+
+                await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "display", displayName);
+                await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "email ", email);
+                await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "accessToken ", accessToken);
+                await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "refreshToken ", refreshToken);
+            }
+        }
+    }
+
+    // Método para extrair qualquer parâmetro da URL
+    private string ExtractParameterFromQuery(string fragment, string key)
+    {
+        var parameters = fragment.TrimStart('#').Split('&');
+        foreach (var param in parameters)
+        {
+            var keyValue = param.Split('=');
+            if (keyValue.Length == 2 && keyValue[0] == key)
+            {
+                return keyValue[1];
+            }
+        }
+        return null;
+    }
+
+    // Método para extrair o access_token da URL
+    private string ExtractAccessToken(string fragment)
+    {
+        var parameters = fragment.TrimStart('#').Split('&');
+        foreach (var param in parameters)
+        {
+            var keyValue = param.Split('=');
+            if (keyValue.Length == 2 && keyValue[0] == "access_token")
+            {
+                return keyValue[1];
+            }
+        }
+        return null;
+    }
+
+
+    protected override void OnInitialized()
+    {
+        _supabase = new Supabase.Client("https://supabase.leandroti.uk/", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE");
+    }
+
+    private string selectedFileName = "Nenhum arquivo selecionado";
+
+    void NavigateToDashBoard()
+    {
+        Navigation.NavigateTo("/dashboard");
+    }
+
+    void NavigateToPageCriarconta()
+    {
+        Navigation.NavigateTo("/criarconta");
+    }
+
+    void NavigateToPageCriarLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

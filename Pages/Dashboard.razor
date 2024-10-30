@@ -1,0 +1,854 @@
+﻿@page "/dashboard"
+@using Google.Apis.Auth.OAuth2
+@using Google.Cloud.Storage.V1;
+@using System.Net.Http
+@using Microsoft.AspNetCore.Components.Forms
+@inject HttpClient Http
+@inject SupabaseService SupabaseService
+@using Microsoft.Extensions.Options
+@using Newtonsoft.Json
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject NavigationManager NavigationManager
+@using System.IO
+@inject IJSRuntime JS
+@inject IJSRuntime JSRuntime
+@using Google.Apis.Http;
+@using System.Net.Http.Headers;
+@using System.Text;
+@using Supabase.Postgrest.Models
+@using blazor_server_wind.Services;
+@using Microsoft.AspNetCore.Components.Forms
+@using System.IdentityModel.Tokens.Jwt;
+@using System.Linq;
+
+
+
+
+
+<div class="min-h-screen flex bg-gray-100">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-lg">
+        <div class="px-6 py-4">
+            <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+        </div>
+        <nav class="mt-6">
+            <ul>
+                <li class="mb-4">
+                    <a href="#" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                        Overview
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a @onclick="@(e => ChangeToAnalytics(salesOverviewTitleReports))" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a2 2 0 00-2-2H5a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h6a2 2 0 012 2v8m-6-6h.01"></path>
+                        </svg>
+                        Reports
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a @onclick="@(e => ChangeToAnalytics(salesOverviewTitleAnalytics))" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7l6 6m0 0l6-6m-6 6V3"></path>
+                        </svg>
+                        Analytics
+                    </a>
+
+                </li>
+
+                <li class="mb-4">
+                    <a @onclick="@(e => ChangeToAnalytics(salesOverviewTitlecamera))" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h4l1-2h8l1 2h4v13H3V7zm7 3a4 4 0 100 8 4 4 0 000-8z"></path>
+                        </svg>
+                        Camera
+                    </a>
+                </li>
+
+
+                <li class="mb-4">
+                    <a @onclick="@(e => ChangeToAnalytics(salesOverviewTitleUpload))" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v4h16v-4M16 12l-4-4-4 4m4-4v12"></path>
+                        </svg>
+                        Upload
+                    </a>
+                </li>
+
+
+                <li class="mb-4">
+                    <a @onclick="@(e => ChangeToAnalytics(salesOverviewTitleHistorico))" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c-3.866 0-7-3.134-7-7H3a9 9 0 1018 0h-2c0 3.866-3.134 7-7 7z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"></path>
+                        </svg>
+                        Histórico
+                    </a>
+                </li>
+
+                <li>
+                    <a @onclick="@(e => ChangeToAnalytics(salesOverviewTitlePragas))" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 10v1h-2v-1a4 4 0 00-8 0v1H6v-1a4 4 0 00-4 4v3h4l1 2h8l1-2h4v-3a4 4 0 00-4-4v1h-2v-1a4 4 0 00-8 0v1H6v-1a4 4 0 00-4 4v3h4l1 2h8l1-2h4v-3a4 4 0 00-4-4v1h-2v-1a4 4 0 00-8 0v1H6v-1a4 4 0 00-4 4v3h4l1 2h8l1-2h4v-3a4 4 0 00-4-4zM12 8v2m0-2l-3 3m3-3l3 3"></path>
+                        </svg>
+                        Pragas
+                    </a>
+                </li>
+
+                <li>
+                    <a @onclick="@(e => ChangeToAnalytics(salesOverviewTitleCadCliente))" class="flex items-center px-6 py-2 text-gray-700 hover:bg-gray-200">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 10v1h-2v-1a4 4 0 00-8 0v1H6v-1a4 4 0 00-4 4v3h4l1 2h8l1-2h4v-3a4 4 0 00-4-4v1h-2v-1a4 4 0 00-8 0v1H6v-1a4 4 0 00-4 4v3h4l1 2h8l1-2h4v-3a4 4 0 00-4-4v1h-2v-1a4 4 0 00-8 0v1H6v-1a4 4 0 00-4 4v3h4l1 2h8l1-2h4v-3a4 4 0 00-4-4zM12 8v2m0-2l-3 3m3-3l3 3"></path>
+                        </svg>
+                        Cadastrar Cliente
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+        <header class="flex justify-between items-center pb-4">
+            <h1 class="text-3xl font-bold text-gray-900">Dashboard :@(usuario != null && !string.IsNullOrEmpty(usuario.email) ? usuario.email : "Usuário não autenticado")</h1>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-md">Add New</button>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Card 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-700">Total Sales</h2>
+                <p class="mt-4 text-3xl font-bold text-gray-900">$18,200</p>
+                <p class="text-sm text-gray-500 mt-1">Last 7 days</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-700">New Users</h2>
+                <p class="mt-4 text-3xl font-bold text-gray-900">1,245</p>
+                <p class="text-sm text-gray-500 mt-1">Last 30 days</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-700">Active Projects</h2>
+                <p class="mt-4 text-3xl font-bold text-gray-900">24</p>
+                <p class="text-sm text-gray-500 mt-1">Ongoing</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-700">Plantas Catalogadas</h2>
+                <p class="mt-4 text-3xl font-bold text-gray-900">@((historicoChamadas?.Count() ?? 0))</p>
+                <p class="text-sm text-gray-500 mt-1">Due today</p>
+            </div>
+        </div>
+
+        <!-- inicio trecho camera-->
+        @if (@salesOverviewTitle == "Sales Overview Upload")
+        {
+            <div class="flex flex-col items-center justify-center h-screen">
+                <h3 class="text-2xl font-bold mb-4">Faça o Upload de uma Planta</h3>
+
+                @if (isUploading)
+                {
+                    <!-- Exibir uma mensagem ou um spinner durante o upload -->
+                    <div class="text-center">
+                        <p class="text-gray-600">Processando a imagem...</p>
+                        <img src="spinner.gif" alt="Carregando" class="mx-auto mt-4 w-12 h-12" />
+                    </div>
+                }
+                else if (!string.IsNullOrEmpty(@imagemcarregada))
+                {
+
+                    <img id="photoElement" src="@imagemcarregada" class="mt-4 border-2 border-gray-600 rounded-lg w-64 h-64 object-contain" />
+                    
+
+                    <!--
+                    <img id="photoElement" src="@imagemUrl" class="mt-4 border-2 border-gray-300 rounded-lg" style="max-width: 100%; height: auto;" />
+                    -->
+                    
+
+                }
+
+
+
+                <div class="flex justify-center items-center mt-6">
+                    <label class="inline-flex items-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg cursor-pointer">
+                        Escolher Arquivo
+                        <InputFile OnChange="HandleFileSelected" class="hidden" />
+                    </label>
+                    <span class="ml-2 text-gray-600">@selectedFileName</span>
+                </div>
+                @if (!string.IsNullOrEmpty(fullText))
+                {
+                        @htmlContent
+                }
+            </div>
+
+            
+
+        }
+
+
+        @if (@salesOverviewTitle == "Sales Overview Historico")
+        {
+            <div class="mt-8 bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Histórico de Chamadas</h2>
+                @if (historicoChamadas == null)
+                {
+                    <p>Carregando...</p>
+                }
+                else if (!historicoChamadas.Any())
+                {
+                    <p>Nenhum histórico encontrado.</p>
+                }
+                else
+                {
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach (var historico in historicoChamadas)
+                        {
+                            <div class="bg-white border border-gray-300 rounded-lg p-4 shadow-md">
+                                <div class="flex flex-col justify-center items-center">
+                                    <h3 class="text-lg font-bold mb-2">@historico.DataHora.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</h3>
+                                    <img src="@historico.UrlImagem" class="rounded-lg w-48 h-48 object-cover mb-4" alt="Image uploaded by @historico.UsuarioEmail" />
+                                </div>
+                                <div class="text-left">
+                                    <h4 class="text-md font-semibold text-gray-800 mb-2">Resposta IA:</h4>
+                                    <div class="text-sm text-gray-600">
+                                        @RetornaHTML(@historico.RespostaIA)
+                                    </div>
+
+                                    <div class="text-center mt-4">
+                                        <button class="bg-red-600 hover:bg-red-700 text-red-600 font-bold py-2 px-4 rounded border-2 border-red-800" @onclick="() => ExcluirHistorico(historico.Id)">
+                                            Excluir
+                                        </button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+        }
+
+
+        
+
+        @if (@salesOverviewTitle == "Sales OverView Cliente")
+        {
+            <div class="mt-8 bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Cadastro de Clientes</h2>
+
+                <!-- Formulário de Cadastro -->
+                <EditForm Model="@novoCliente" OnValidSubmit="CadastrarCliente">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Nome</label>
+                        <InputText class="w-full p-2 border rounded-lg" @bind-Value="novoCliente.Nome" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Idade</label>
+                        <InputNumber class="w-full p-2 border rounded-lg" @bind-Value="novoCliente.Idade" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Telefone</label>
+                        <InputText class="w-full p-2 border rounded-lg" @bind-Value="novoCliente.Telefone" />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Endereço</label>
+                        <InputText class="w-full p-2 border rounded-lg" @bind-Value="novoCliente.Endereco" />
+                    </div>
+
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-red-600 font-bold py-2 px-4 rounded">
+                        Cadastrar Cliente
+                    </button>
+                </EditForm>
+
+                
+            </div>
+
+
+
+        }
+
+
+
+        <!-- fim trecho camera-->
+        <!-- Trecho do Código das Pragas -->
+        @if (@salesOverviewTitle == "Sales Overview Pragas")
+        {
+
+            <!-- Charts Section -->
+            <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Chart 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold text-gray-700">@salesOverviewTitle</h2>
+                    <div class="mt-4">
+                        <!-- Placeholder for chart -->
+                        <div class="h-64 bg-gray-200 rounded-lg">oi </div>
+                    </div>
+                </div>
+
+
+                <!-- Chart 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-semibold text-gray-700">User Growth</h2>
+                    <div class="mt-4">
+                        <!-- Placeholder for chart -->
+                        <div class="h-64 bg-gray-200 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- FIM Trecho do Código das Pragas -->
+
+    </div>
+</div>
+
+
+
+
+
+
+@code {
+
+
+
+
+
+
+    private string salesOverviewTitle = "Sales Overview";
+    private string salesOverviewTitleAnalytics = "Sales Overview analytics";
+    private string salesOverviewTitlecamera = "Sales Overview camera";
+    private string salesOverviewTitleReports = "Sales Overview Reports";
+    private string salesOverviewTitleUpload = "Sales Overview Upload";
+    private string salesOverviewTitleHistorico = "Sales Overview Historico";
+    private string salesOverviewTitlePragas = "Sales Overview Pragas";
+    private string salesOverviewTitleCadCliente = "Sales OverView Cliente";
+
+    private List<historicochamada> historicoChamadas; 
+
+    private string imagemcarregada = "";
+    private string imagemcarregadasabino = "";
+
+    private string fullText = "";
+    private string imagemUrl = "";
+
+    private List<MeuEmail> minhaLista;
+    private MeuEmail usuario;
+
+    const string ProjectId = "projetoscheduler";
+    const string Location = "us-central1";
+    const string AiPlatformUrl = $"https://{Location}-aiplatform.googleapis.com";
+    const string ModelId = "gemini-1.5-flash-001";
+    const string EndpointUrl = $"{AiPlatformUrl}/v1/projects/{ProjectId}/locations/{Location}/publishers/google/models/{ModelId}:streamGenerateContent";
+
+    private string extractfullTex = "";
+
+    private string selectedFileName = "Nenhum arquivo selecionado";
+
+    private MarkupString htmlContent;
+
+    private bool isUploading = false;
+
+    public Supabase.Client _supabase;
+
+    private List<HistoricoChamada> historicoList = new List<HistoricoChamada>();
+
+    private Cliente novoCliente = new Cliente();
+
+    public string GetUserRoleFromToken(string accessToken)
+    {
+        var handler = new JwtSecurityTokenHandler();
+
+        if (string.IsNullOrEmpty(accessToken) || !handler.CanReadToken(accessToken))
+        {
+            Console.WriteLine("Erro: Token de acesso inválido.");
+            return null;
+        }
+
+        var jsonToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+
+        // Verifica a claim 'aud' como alternativa
+        var userAudience = jsonToken?.Claims.FirstOrDefault(c => c.Type == "aud")?.Value;
+
+        if (userAudience == "authenticated")
+        {
+            Console.WriteLine("Usuário autenticado.");
+            return "authenticated";
+        }
+
+        Console.WriteLine("Erro: Usuário não possui a audiência 'authenticated'.");
+        return null;
+    }
+
+
+    public string GetUserAudienceFromToken(string accessToken)
+    {
+        var handler = new JwtSecurityTokenHandler();
+
+        if (string.IsNullOrEmpty(accessToken) || !handler.CanReadToken(accessToken))
+        {
+            Console.WriteLine("Erro: Token de acesso inválido.");
+            return null;
+        }
+
+        var jsonToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+
+        // Verifica a claim 'aud' como alternativa
+        var userAudience = jsonToken?.Claims.FirstOrDefault(c => c.Type == "aud")?.Value;
+
+        if (userAudience == "authenticated")
+        {
+            Console.WriteLine("Usuário autenticado.");
+            return "authenticated";
+        }
+
+        Console.WriteLine("Erro: Usuário não possui a audiência 'authenticated'.");
+        return null;
+    }
+
+
+    private async Task CadastrarCliente()
+    {
+        try
+        {
+            
+            var minhaListaJson = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "myemail");
+            var meudisplayName = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "display");
+            var meuemail = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "email ");
+            var accessToken = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "accessToken ");
+            var refreshToken = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "refreshToken ");
+            // Validação para garantir que tokens não estejam vazios
+            if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(refreshToken))
+            {
+                Console.WriteLine("Erro: Tokens de acesso ou atualização estão vazios.");
+                return;
+            }
+
+            //cadastra cliente
+            await SupabaseService.AddCliente(novoCliente);
+             
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao cadastrar cliente: {ex.Message}");
+        }
+    }
+
+
+    private async Task ExcluirHistorico(Guid id)
+    {
+        await SupabaseService.DeleteHistoricoChamada(id);
+        // Remover o item excluído da lista local
+        historicoList.RemoveAll(h => h.Id == id);
+        // Forçar a atualização da UI
+
+        historicoChamadas = await SupabaseService.GetHistoricoChamadas(usuario.email);
+        ChangeToAnalytics(salesOverviewTitleHistorico);
+
+        StateHasChanged();
+    }
+
+
+    public async Task ConfigureSession(string accessToken, string refreshToken)
+    {
+        if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(refreshToken))
+        {
+            throw new ArgumentException("Os tokens de acesso e atualização não podem ser nulos ou vazios.");
+        }
+
+        // Opcional: verificar a role no accessToken
+        var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+        var jsonToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+        var role = jsonToken?.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+
+        Console.WriteLine("Role no token: " + role);  // Verifique se a role está correta
+
+        await _supabase.Auth.SetSession(accessToken, refreshToken);
+    }
+
+    
+    public string GetUserIdFromToken(string accessToken)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jsonToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+
+        // Captura o 'user_id' a partir dos claims do token
+        var userId = jsonToken?.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+
+        return userId;
+    }
+
+    protected override void OnInitialized()
+    {
+
+        _supabase = new Supabase.Client("https://supabase.leandroti.uk/", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE");
+
+        }
+
+        private async Task CarregarHistorico()
+        {
+            try {
+                var minhaListaJson = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "myemail");
+                var meudisplayName = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "display");
+                var meuemail = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "email ");
+                var accessToken = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "accessToken ");
+                var refreshToken = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "refreshToken ");
+
+                usuario = new MeuEmail();
+
+                usuario.email = meuemail;
+                 
+
+            // Carrega o histórico de chamadas
+            historicoChamadas = await SupabaseService.GetHistoricoChamadas(meuemail);
+
+
+            }catch(Exception ex )
+            {
+                Console.WriteLine($"Erro ao carregar histórico de chamadas: {ex}");
+            }
+
+        }
+
+
+    public async Task SetUserRole(string role)
+    {
+        await _supabase.Rpc("set_user_role", new { new_role = role });
+    }
+
+
+
+
+
+    private MarkupString RetornaHTML(string meuhtml)
+    {
+        return (MarkupString)meuhtml;
+    }
+
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            fullText = "";
+
+            isUploading = true; // Iniciar o estado de carregamento
+
+
+            // Captura o arquivo selecionado
+            var uploadedFile = e.File;
+
+            var fileType = uploadedFile.ContentType;
+
+            var fileName = $"{usuario.email}_{Guid.NewGuid()}_{uploadedFile.Name}"; // $"{Guid.NewGuid()}_{file.Name}";
+
+            // Chame o método para salvar o arquivo no servidor
+            // var filePath = await SaveFileToServer(uploadedFile, fileName);
+
+            // Armazene a URL da imagem para exibição
+            // imagemUrl = $"uploads/{Path.GetFileName(filePath)}";
+            string uploadMessage = "Arquivo carregado com sucesso!";
+
+            // var filePathsabino = Path.Combine(WebHostEnvironment.WebRootPath, "uploads", fileName);
+
+            
+            // // Gera um nome de arquivo único
+             //var fileName = $"{usuario.email}_{Guid.NewGuid()}_{uploadedFile.Name}";
+             var imagePath = Path.Combine("Assets", fileName);
+
+            // // Faz o upload sem alterar o conteúdo
+            // await _supabase.Storage.From("paciente-imagens").Upload(filePathsabino, imagePath, null, null, true);
+
+            // // Obtém a URL pública da imagem
+            imagemcarregada = _supabase.Storage.From("paciente-imagens/Assets").GetPublicUrl(fileName);
+
+
+            // URL do arquivo de credenciais
+            string url = "https://supabase.leandroti.uk/storage/v1/object/public/paciente-imagens/credenciais/sabinoscheduler.json";
+
+            using HttpClient client = new HttpClient();
+
+            // Faz a requisição GET para obter o JSON como stream
+            using var responseStream = await client.GetStreamAsync(url);
+
+            // Copia o conteúdo do responseStream para um MemoryStream, que podemos reutilizar
+            using var memoryStream = new MemoryStream();
+            await responseStream.CopyToAsync(memoryStream);
+            memoryStream.Position = 0; // Reseta a posição do stream para o início
+
+            // Usa o MemoryStream para carregar as credenciais
+            string currentDirectory = Directory.GetCurrentDirectory();
+
+                GoogleCredential credential = GoogleCredential.FromStream(memoryStream);
+
+
+
+            if (credential != null)
+                {
+                Console.WriteLine("Credenciais carregadas com sucesso.");
+            }
+            else
+            {
+            Console.WriteLine("Falha ao carregar as credenciais.");
+            }
+
+
+            // Baixar o arquivo da URL
+            using var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(imagemcarregada);
+            response.EnsureSuccessStatusCode();
+
+            // Salvar o arquivo baixado em um stream temporário
+            using var fileStream = await response.Content.ReadAsStreamAsync();
+
+            // Cria o cliente do Google Cloud Storage
+            var storage = StorageClient.Create(credential);
+
+            // Faz o upload para o bucket GCS
+            storage.UploadObject("sabino", $"plantas/{fileName}", null, fileStream);
+
+
+            //string text = "Eu quero que voce identifique esta planta ?  Me fale quais são as principais pragas que existem neste modelo de planta ? , e quantas vezes devemos colocar água nesta planta ?  qual é o melhor clima para se ter esta planta ?  qual é o melhor tipo de solo para se ter esta planta ?  ";
+            //string text = "Consegue identificar que animal é este, se é venenoso e aonde ele vive ?  me retorne em portugues do brasil a resposta";
+            //string text = "Eu quero que voce identifique esta planta ?  Me fale quais são as principais pragas que existem neste modelo de planta ? , e quantas vezes devemos colocar água nesta planta ?  qual é o melhor clima para se ter esta planta ?  qual é o melhor tipo de solo para se ter esta planta ? Eu quero que voce me retorne a sua resposta em TailWind CSS";
+            string text = "Eu quero que voce identifique esta planta ?  Me fale quais são as principais pragas que existem neste modelo de planta ? ,  e quantas vezes devemos colocar água nesta planta ?   qual é o melhor clima para se ter esta planta ?   qual é o melhor tipo de solo para se ter esta planta ?  Esta planta em uso medicial ?  Esta planta é comestivel ?  Esta plata oferece perido para crianças ou pets ?   Eu quero que voce me retorne a sua resposta em TailWind CSS";
+
+
+            //string imageUrl = "gs://cloud-samples-data/generative-ai/image/320px-Felis_catus-cat_on_snow.jpg";
+            //string imageUrl = @"gs://sabino/plantas/podocarpo.jpeg";
+            string imageUrl = $"gs://sabino/plantas/{fileName}";
+
+            Console.WriteLine($"Text: {text}");
+            Console.WriteLine($"ImageUrl: {imageUrl}");
+
+            Console.WriteLine($"Uploaded {credential}.");
+
+
+            string payload = GeneratePayload(text, imageUrl);
+            string responsepay = await SendRequest(payload);
+            var geminiResponses = JsonConvert.DeserializeObject < List < blazor_server_wind.Services.Root>> (responsepay);
+
+            fullText = "";
+
+           fullText = string.Join("", geminiResponses
+           .SelectMany(response => response.candidates)
+           .SelectMany(candidates => candidates.content.parts)
+            .Select(part => part.text));
+
+                if (fullText.Contains("html")) {
+                extractfullTex = ExtrairConteudoEntreBackticks(fullText);
+                extractfullTex = extractfullTex.Replace("html", "");
+
+                fullText = extractfullTex;
+
+            }
+
+
+            
+        // Cadastrar o histórico da chamada
+        var historico = new historicochamada
+        {
+            Id = Guid.NewGuid(),
+            UsuarioEmail = usuario.email,
+            NomeArquivo = fileName,
+            UrlImagem = imagemcarregada,
+            TextoPergunta = text,
+                    RespostaIA =  fullText,
+            DataHora = DateTime.UtcNow,
+                    UserRole = "default_role"
+        };
+
+            historico.UserRole = string.IsNullOrEmpty(historico.UserRole) ? "default_role" : historico.UserRole;
+
+            await SupabaseService.AddHistoricoChamada(historico);
+
+
+
+            isUploading = false;
+            htmlContent = (MarkupString)fullText;
+
+
+            Console.WriteLine($"retorno {fullText}.");
+            
+            isUploading = false;
+            historicoChamadas = await SupabaseService.GetHistoricoChamadas(usuario.email);
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ocorreu um erro: {ex.Message}");
+        }
+    }
+
+    // private async Task<string> SaveFileToServer(IBrowserFile file, string fileName)
+    // {
+    //     // Gere um nome único para o arquivo
+        
+
+    //     // Defina o caminho onde o arquivo será salvo no servidor (por exemplo: wwwroot/uploads)
+    //     var filePath = Path.Combine(WebHostEnvironment.WebRootPath, "uploads", fileName);
+
+    //     // Crie o diretório "uploads" se ele não existir
+    //     Directory.CreateDirectory(Path.Combine(WebHostEnvironment.WebRootPath, "uploads"));
+
+    //     // Salve o arquivo no servidor
+    //     using var fileStream = new FileStream(filePath, FileMode.Create);
+    //     await file.OpenReadStream().CopyToAsync(fileStream);
+
+    //     return filePath; // Retorne o caminho completo no servidor
+    // }
+
+
+    public static string ExtrairConteudoEntreBackticks(string input)
+    {
+        string inicio = "```";
+        string fim = "```";
+
+        int posInicio = input.IndexOf(inicio);
+        int posFim = input.LastIndexOf(fim);
+
+        if (posInicio == -1 || posFim == -1 || posInicio == posFim)
+        {
+            return "Nenhum conteúdo encontrado entre os caracteres ```";
+        }
+
+        posInicio += inicio.Length;
+
+        return input.Substring(posInicio, posFim - posInicio).Trim();
+    }
+
+
+
+    private async static Task<string> SendRequest(string payload)
+    {
+        //GoogleCredential credential = GoogleCredential.GetApplicationDefault();
+        //GoogleCredential credential = GoogleCredential.GetApplicationDefault();
+        string url = "https://supabase.leandroti.uk/storage/v1/object/public/paciente-imagens/credenciais/sabinoscheduler.json";
+
+        using HttpClient client = new HttpClient();
+
+        // Faz a requisição GET para obter o JSON como stream
+        using var responseStream = await client.GetStreamAsync(url);
+
+        // Copia o conteúdo do responseStream para um MemoryStream, que podemos reutilizar
+        using var memoryStream = new MemoryStream();
+        await responseStream.CopyToAsync(memoryStream);
+        memoryStream.Position = 0; // Reseta a posição do stream para o início
+
+        // Usa o MemoryStream para carregar as credenciais
+        string currentDirectory = Directory.GetCurrentDirectory();
+
+        GoogleCredential credential = GoogleCredential.FromStream(memoryStream);
+
+
+        //GoogleCredential credential = GoogleCredential.FromFile("../../../credencials.json");
+        var handler = credential.ToDelegatingHandler(new HttpClientHandler());
+        using HttpClient httpClient = new(handler);
+
+        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        HttpResponseMessage response = await httpClient.PostAsync(EndpointUrl,
+            new StringContent(payload, Encoding.UTF8, "application/json"));
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadAsStringAsync();
+    }
+
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Lendo a lista do sessionStorage
+            var minhaListaJson = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "myemail");
+            var meudisplayName = await JSRuntime.InvokeAsync<string>("sessionStorage.setItem", "display");
+            var meuemail = await JSRuntime.InvokeAsync<string>("sessionStorage.setItem", "email ");
+
+            usuario = System.Text.Json.JsonSerializer.Deserialize<MeuEmail>(minhaListaJson);
+
+            //Console.WriteLine($"JSON recuperado: {minhaListaJson}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao desserializar JSON: {ex.Message}");
+        }
+
+        await CarregarHistorico(); // This line is now correct in the async method
+
+
+    }
+
+    public class UserCredentials
+    {
+        public string email { get; set; }
+        public string password { get; set; }
+    }
+
+
+    private void ChangeToAnalytics(string name)
+    {
+        //Console.WriteLine($"ChangeToAnalytics called with: {name}");
+        salesOverviewTitle = name;
+    }
+
+
+    public class MeuEmail
+    {
+        public string email { get; set; }
+        public string password { get; set; }
+    }
+
+
+    private static string GeneratePayload(string text, string imageUrl)
+    {
+        var payload = new
+        {
+            contents = new
+            {
+                role = "USER",
+                parts = new object[] {
+                    new {text = text},
+                    new {file_data = new {
+                            mime_type = "image/png",
+                            file_uri = imageUrl
+                        }
+                    }
+            }
+            },
+            generation_config = new
+            {
+                temperature = 0.4,
+                top_p = 1,
+                top_k = 32,
+                max_output_tokens = 2048
+            }
+        };
+        return JsonConvert.SerializeObject(payload);
+    }
+
+}
+
+
+

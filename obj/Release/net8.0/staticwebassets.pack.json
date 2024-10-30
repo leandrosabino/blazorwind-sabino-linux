@@ -1,0 +1,149 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\bin\\Release\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\obj\\Release\\net8.0\\compressed\\vnm4szse30.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\css\\input.css",
+      "PackagePath": "staticwebassets\\css\\input.css"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\css\\output.css",
+      "PackagePath": "staticwebassets\\css\\output.css"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\css\\theme.css",
+      "PackagePath": "staticwebassets\\css\\theme.css"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\images\\icons8-facebook-novo-48.png",
+      "PackagePath": "staticwebassets\\images\\icons8-facebook-novo-48.png"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\images\\icons8-google-48.png",
+      "PackagePath": "staticwebassets\\images\\icons8-google-48.png"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_0d37e8a7-d8f7-468a-83bd-a890d5b8cee4_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_0d37e8a7-d8f7-468a-83bd-a890d5b8cee4_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_16659f59-0e18-4f0f-8939-c405ff198998_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_16659f59-0e18-4f0f-8939-c405ff198998_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_26f0b5f4-0566-4296-acce-f0d4364caa41_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_26f0b5f4-0566-4296-acce-f0d4364caa41_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_2d34062d-687d-4276-a862-60c6ac2315ac_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_2d34062d-687d-4276-a862-60c6ac2315ac_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_3e041704-626e-442b-9522-317ca2666f27_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_3e041704-626e-442b-9522-317ca2666f27_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_5f9c7155-03a2-430e-8636-c77c95e1258c_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_5f9c7155-03a2-430e-8636-c77c95e1258c_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_68ed41b6-7b3d-4755-8420-40b7b3b5ac86_leandrosabin@gmail.com_696005b9-298f-407b-8817-f55a64295d6e_podo_6.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_68ed41b6-7b3d-4755-8420-40b7b3b5ac86_leandrosabin@gmail.com_696005b9-298f-407b-8817-f55a64295d6e_podo_6.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_6a9bd4d5-fc60-4c27-8a6a-6c19921a5fb5_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_6a9bd4d5-fc60-4c27-8a6a-6c19921a5fb5_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_6b9fb0ab-b1e8-4c5a-a8be-92e23de6a423_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_6b9fb0ab-b1e8-4c5a-a8be-92e23de6a423_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_6bcefd21-6f41-4d0a-bf07-dff8399fc727_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_6bcefd21-6f41-4d0a-bf07-dff8399fc727_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_6ed928ec-b649-4029-919d-e1bed0e30b9f_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_6ed928ec-b649-4029-919d-e1bed0e30b9f_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_7b1b98c4-712e-4d5e-bf5e-fa60cb459aa5_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_7b1b98c4-712e-4d5e-bf5e-fa60cb459aa5_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_83344a0a-bd45-4e3d-a7e5-5b737e357d57_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_83344a0a-bd45-4e3d-a7e5-5b737e357d57_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_83fa2512-eb38-436a-a70e-603272077b57_leandrosabin@gmail.com_6dccf82d-e479-4213-a6a5-f8a5434c26b1_tumbergia.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_83fa2512-eb38-436a-a70e-603272077b57_leandrosabin@gmail.com_6dccf82d-e479-4213-a6a5-f8a5434c26b1_tumbergia.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_9e5f8231-2184-4e50-a78e-9b5eb05ba95f_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_9e5f8231-2184-4e50-a78e-9b5eb05ba95f_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_a0d579e5-3f27-4baf-ae2f-2b01d852f5e7_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_a0d579e5-3f27-4baf-ae2f-2b01d852f5e7_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_a67e6fd4-3428-4f51-a7b5-6333dae46a09_leandrosabin@gmail.com_6dccf82d-e479-4213-a6a5-f8a5434c26b1_tumbergia.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_a67e6fd4-3428-4f51-a7b5-6333dae46a09_leandrosabin@gmail.com_6dccf82d-e479-4213-a6a5-f8a5434c26b1_tumbergia.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_bcb83d6e-9121-4a4d-92fb-d61fbfabba61_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_bcb83d6e-9121-4a4d-92fb-d61fbfabba61_leandrosabin@gmail.com_b53f1138-7071-485c-a084-bd504ed53638_WhatsApp Image 2024-09-01 at 12.21.53.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_c1eb6a75-4668-4264-abc5-c633f4e04bbb_leandrosabin@gmail.com_be7ee65f-2d73-4997-8c74-d9433c64279e_araucaria.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_c1eb6a75-4668-4264-abc5-c633f4e04bbb_leandrosabin@gmail.com_be7ee65f-2d73-4997-8c74-d9433c64279e_araucaria.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_e5b8885b-0a86-49f6-99a8-395fe3e9e5d5_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_e5b8885b-0a86-49f6-99a8-395fe3e9e5d5_leandrosabin@gmail.com_bb799fdb-cd78-47eb-993c-ad6c4c8e16f4_podo_5.jpeg"
+    },
+    {
+      "Id": "C:\\blazor_web_assembly\\blazor_web_assembly\\wwwroot\\uploads\\leandrosabin@gmail.com_f30198e9-4608-4872-b39c-0e58b2db93f3_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\leandrosabin@gmail.com_f30198e9-4608-4872-b39c-0e58b2db93f3_leandrosabin@gmail.com_ba44e8cc-25b1-4303-b2f1-b599b53f9e28_araucaria.jpeg"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.blazor_web_assembly.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.blazor_web_assembly.props",
+      "PackagePath": "build\\blazor_web_assembly.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.blazor_web_assembly.props",
+      "PackagePath": "buildMultiTargeting\\blazor_web_assembly.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.blazor_web_assembly.props",
+      "PackagePath": "buildTransitive\\blazor_web_assembly.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,151 @@
+﻿@page "/login"
+@using Microsoft.AspNetCore.Components.Forms
+@using Newtonsoft.Json
+@inject SupabaseService SupabaseService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Login</PageTitle>
+
+<body>
+    <section class="bg-white">
+        <div class="lg:grid lg:min-h-screen lg:grid-cols-12">
+            <aside class="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
+                <img alt=""
+                     src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                     class="absolute inset-0 h-full w-full object-cover" />
+            </aside>
+
+            <main class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+                <div class="max-w-xl lg:max-w-3xl">
+                    <a class="block text-blue-600" href="#">
+                        <span class="sr-only">Home</span>
+                        <svg class="h-8 sm:h-10"
+                             viewBox="0 0 28 24"
+                             fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="..." fill="currentColor" />
+                        </svg>
+                    </a>
+
+                    <h1 class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+                        Login!
+                    </h1>
+
+                    <p class="mt-4 leading-relaxed text-gray-500">
+                        Preencha o nosso formulário para que você descubra o mundo das plantas.
+                    </p>
+
+                    <EditForm Model="@userEmail" OnValidSubmit="FazerLogin" class="mt-8 grid grid-cols-6 gap-6">
+                        <div class="col-span-6">
+                            <label for="Email" class="block text-sm font-medium text-gray-700"> Email </label>
+                            <InputText id="Email" @bind-Value="userEmail.email" class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm" />
+                        </div>
+
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="Password" class="block text-sm font-medium text-gray-700"> Password </label>
+                            <InputText type="password" id="Password" @bind-Value="userEmail.password" class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm" />
+                        </div>
+
+                        <!-- Exibe a mensagem de erro, se existir -->
+                        @if (!string.IsNullOrEmpty(loginErrorMessage))
+                        {
+                            <div class="col-span-6">
+                                <p class="text-red-600">@loginErrorMessage</p>
+                            </div>
+                        }
+
+                        <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+                            <button class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                                OK
+                            </button>
+
+                            <p class="mt-4 text-sm text-gray-500 sm:mt-0">
+                                Você já tem uma conta?
+                                <a href="criarconta" class="text-gray-700 underline">Criar Conta</a>.
+                            </p>
+                        </div>
+                    </EditForm>
+
+                    <!-- Botão de Login com Google -->
+                    <div class="mt-4">
+                        <button @onclick="OnLoginWithGoogleClick" class="col-span-6 sm:flex sm:items-center sm:gap-4 border rounded px-4 py-2 bg-white hover:bg-gray-100">
+                            <img src="images/icons8-google-48.png" alt="Google" style="width: 20px; height: 20px; margin-right: 8px;" />
+                            Login com Google
+                        </button>
+                    </div>
+
+                    <!-- Botão de Login com Facebook -->
+                    <div class="mt-4">
+                        <button @onclick="OnLoginWithFacebookClick" class="col-span-6 sm:flex sm:items-center sm:gap-4 border rounded px-4 py-2 bg-white hover:bg-gray-100">
+                            <img src="images/icons8-facebook-novo-48.png" alt="Google" style="width: 20px; height: 20px; margin-right: 8px;" />
+                            Login com Google
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+</body>
+
+@code {
+    private UserEmail userEmail = new UserEmail();
+    private string loginErrorMessage;
+
+
+    private async Task FazerLogin()
+    {
+        // Serializa o objeto userEmail e armazena no sessionStorage
+        var emailJson = JsonConvert.SerializeObject(userEmail);
+        await JSRuntime.InvokeVoidAsync("sessionStorage.setItem", "myemail", emailJson);
+
+        bool bollautenticar = await SupabaseService.AutenticarClienteBool(userEmail.email, userEmail.password);
+
+        if (bollautenticar)
+        {
+            // Redireciona para outra página
+            NavigationManager.NavigateTo("/dashboard");
+        }
+        else
+        {
+            loginErrorMessage = "Usuário ou senha inválidos. Por favor, tente novamente.";
+        }
+    }
+
+    private async Task OnLoginWithGoogleClick()
+    {
+        // Chama o método do SupabaseService para gerar a URL de autenticação do Google
+        var url = await SupabaseService.GetGoogleAuthUrl();
+        if (!string.IsNullOrEmpty(url))
+        {
+            NavigationManager.NavigateTo(url, true);
+        }
+        else
+        {
+            loginErrorMessage = "Erro ao obter a URL de autenticação do Google. Por favor, tente novamente.";
+        }
+    }
+
+
+
+
+    private async Task OnLoginWithFacebookClick()
+    {
+        // Chama o método do SupabaseService para gerar a URL de autenticação do Google
+        var url = await SupabaseService.GetFacebookAuthUrl();
+        if (!string.IsNullOrEmpty(url))
+        {
+            NavigationManager.NavigateTo(url, true);
+        }
+        else
+        {
+            loginErrorMessage = "Erro ao obter a URL de autenticação do Google. Por favor, tente novamente.";
+        }
+    }
+
+    public class UserEmail
+    {
+        public string email { get; set; }
+        public string password { get; set; }
+    }
+}
