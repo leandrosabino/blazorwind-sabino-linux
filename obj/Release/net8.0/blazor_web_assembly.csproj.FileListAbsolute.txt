@@ -1216,3 +1216,6 @@ C:\blazor_web_assembly\blazor_web_assembly\obj\Release\net8.0\blazor_web_assembl
 C:\blazor_web_assembly\blazor_web_assembly\obj\Release\net8.0\refint\blazor_web_assembly.dll
 C:\blazor_web_assembly\blazor_web_assembly\obj\Release\net8.0\blazor_web_assembly.pdb
 C:\blazor_web_assembly\blazor_web_assembly\obj\Release\net8.0\ref\blazor_web_assembly.dll
+C:\blazor_web_assembly\blazor_web_assembly\bin\Release\net8.0\output\web.config
+C:\blazor_web_assembly\blazor_web_assembly\bin\Release\net8.0\output\wwwroot\_framework\blazor.boot.json
+C:\blazor_web_assembly\blazor_web_assembly\obj\Release\net8.0\blazor_web_assembly.sourcelink.json

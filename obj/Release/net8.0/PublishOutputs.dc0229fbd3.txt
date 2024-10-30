@@ -1,0 +1,3 @@
+C:\blazor_web_assembly\blazor_web_assembly\bin\Release\net8.0\publish\output\web.config
+C:\blazor_web_assembly\blazor_web_assembly\bin\Release\net8.0\publish\output\wwwroot\_framework\blazor.boot.json
+C:\blazor_web_assembly\blazor_web_assembly\bin\Release\net8.0\publish\web.config

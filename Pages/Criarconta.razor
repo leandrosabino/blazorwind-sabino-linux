@@ -138,6 +138,7 @@
 
     public Supabase.Client _supabase;
 
+    private string loginErrorMessage;
     protected override void OnInitialized()
     {
         _supabase = new Supabase.Client("https://supabase.leandroti.uk/", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
@@ -148,19 +149,33 @@
     {
         try
         {
-            var response = await _supabase.Auth.SignIn(Provider.Facebook);
+            // var response = await _supabase.Auth.SignIn(Provider.Facebook);
 
-            // Verifica se a resposta tem uma URL válida para redirecionamento
-            if (response != null && !string.IsNullOrEmpty(response.Uri.AbsoluteUri.Replace("//", "/")))
+            // // Verifica se a resposta tem uma URL válida para redirecionamento
+            // if (response != null && !string.IsNullOrEmpty(response.Uri.AbsoluteUri.Replace("//", "/")))
+            // {
+            //     NavigationManager.NavigateTo(response.Uri.AbsoluteUri.Replace("//", "/")); // Redireciona para o Google OAuth
+            // }
+            // else
+            // {
+            //     Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
+            // }
+
+            // Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
+
+
+            // Chama o método do SupabaseService para gerar a URL de autenticação do Google
+            var url = await SupabaseService.GetFacebookAuthUrl();
+            if (!string.IsNullOrEmpty(url))
             {
-                NavigationManager.NavigateTo(response.Uri.AbsoluteUri.Replace("//", "/")); // Redireciona para o Google OAuth
+                NavigationManager.NavigateTo(url, true);
             }
             else
             {
-                Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
+                loginErrorMessage = "Erro ao obter a URL de autenticação do Google. Por favor, tente novamente.";
             }
 
-            Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
+
         }
         catch (Exception ex)
         {
@@ -170,26 +185,41 @@
 
     public async Task OnLoginWithGoogleClick()
     {
-        try
-        {
-            var response = await _supabase.Auth.SignIn(Provider.Google);
+        // try
+        // {
+        //     var response = await _supabase.Auth.SignIn(Provider.Google);
+        //     var minhaurl = response.Uri.AbsoluteUri.Replace("//", "/");
+        //     // Verifica se a resposta tem uma URL válida para redirecionamento
+        //     //if (response != null && !string.IsNullOrEmpty(response.Uri.AbsoluteUri.Replace("//", "/")))
+        //     //{
+        //         //NavigationManager.NavigateTo(response.Uri.AbsoluteUri.Replace("//", "/")); // Redireciona para o Google OAuth
+        //     NavigationManager.NavigateTo(minhaurl);
+        //     //}
+        //     //else
+        //     //{
+        //     ///    Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
+        //     //}
 
-            // Verifica se a resposta tem uma URL válida para redirecionamento
-            if (response != null && !string.IsNullOrEmpty(response.Uri.AbsoluteUri.Replace("//", "/")))
-            {
-                NavigationManager.NavigateTo(response.Uri.AbsoluteUri.Replace("//", "/")); // Redireciona para o Google OAuth
-            }
-            else
-            {
-                Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
-            }
+        //     Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
+        // }
+        // catch (Exception ex)
+        // {
+        //     Console.WriteLine("Erro durante login com Google: " + ex.Message);
+        // }
 
-            Console.WriteLine("Erro: URL de redirecionamento não encontrada.");
-        }
-        catch (Exception ex)
+        
+        // Chama o método do SupabaseService para gerar a URL de autenticação do Google
+        var url = await SupabaseService.GetGoogleAuthUrl();
+        if (!string.IsNullOrEmpty(url))
         {
-            Console.WriteLine("Erro durante login com Google: " + ex.Message);
+            NavigationManager.NavigateTo(url, true);
         }
+        else
+        {
+            loginErrorMessage = "Erro ao obter a URL de autenticação do Google. Por favor, tente novamente.";
+        }
+
+
     }
 
 
